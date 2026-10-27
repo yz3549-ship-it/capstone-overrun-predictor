@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { TemperaturePrediction } from '@/components/temperature-prediction';
 import {
   ArrowUpRight,
   FlaskConical,
@@ -310,11 +311,11 @@ export default function Home() {
             Interactive prediction tool
           </Badge>
           <h1 className="font-heading text-3xl font-semibold tracking-[-0.03em] text-balance md:text-4xl">
-            Estimate ice cream overrun before the experiment
+            Predict overrun and ice cream temperature
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
-            Adjust the initial mix temperature and blast time to obtain an
-            instant estimate from the quadratic ridge machine learning model
+            Adjust the initial mix temperature and blast time to view
+            instant overrun and product-temperature estimates from models
             fitted to the current laboratory data.
           </p>
         </div>
@@ -530,6 +531,9 @@ export default function Home() {
           </Card>
         </div>
 
+        <TemperaturePrediction temperature={temperature} blastTime={blastTime} />
+
+        <h2 className="mt-8 font-heading text-xl font-semibold">Overrun model performance</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
           {[
             ['Grouped MAE', `${MODEL_METRICS.mae.toFixed(2)} pp`],

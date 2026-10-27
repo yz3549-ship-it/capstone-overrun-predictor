@@ -1,0 +1,249 @@
+{
+  "source_md5": "13222519c0889dbfbb11fe8a83a22efb",
+  "n": 24,
+  "conditions": 12,
+  "selected": "quadratic",
+  "lowest_mae": "quadratic",
+  "one_se_threshold": 0.94763270699851698,
+  "comparison": [
+    {
+      "model": "mean_baseline",
+      "label": "Mean baseline",
+      "family": "Baseline",
+      "MAE": 2.7424242424242427,
+      "MAE_SE": 0.43460869171908278,
+      "RMSE": 3.1428451911153377,
+      "R2": -0.18269517804631441,
+      "within_one_se": false,
+      "selected": false
+    },
+    {
+      "model": "linear",
+      "label": "OLS linear additive",
+      "family": "Traditional statistics",
+      "MAE": 1.2058793285826948,
+      "MAE_SE": 0.20589344054595171,
+      "RMSE": 1.4216640524595359,
+      "R2": 0.75799696530963845,
+      "within_one_se": false,
+      "selected": false
+    },
+    {
+      "model": "interaction",
+      "label": "OLS linear interaction",
+      "family": "Traditional statistics",
+      "MAE": 1.5033011272141708,
+      "MAE_SE": 0.2991512452071613,
+      "RMSE": 1.8290237366118982,
+      "R2": 0.59944188835484935,
+      "within_one_se": false,
+      "selected": false
+    },
+    {
+      "model": "quadratic",
+      "label": "OLS quadratic response surface",
+      "family": "Traditional statistics",
+      "MAE": 0.81425670565993202,
+      "MAE_SE": 0.13337600133858499,
+      "RMSE": 0.98327781635050771,
+      "R2": 0.88423445250923693,
+      "within_one_se": true,
+      "selected": true
+    },
+    {
+      "model": "time_linear",
+      "label": "OLS time only linear",
+      "family": "Traditional statistics",
+      "MAE": 1.1496376811594204,
+      "MAE_SE": 0.17815510979366139,
+      "RMSE": 1.3317645536852907,
+      "R2": 0.78763558254409327,
+      "within_one_se": false,
+      "selected": false
+    },
+    {
+      "model": "time_quadratic",
+      "label": "OLS time only quadratic",
+      "family": "Traditional statistics",
+      "MAE": 0.85558320889331307,
+      "MAE_SE": 0.17262809355561409,
+      "RMSE": 1.1071547639434089,
+      "R2": 0.85322789806554544,
+      "within_one_se": false,
+      "selected": false
+    },
+    {
+      "model": "ridge2",
+      "label": "Quadratic ridge",
+      "family": "Machine learning",
+      "MAE": 0.93967803232888958,
+      "MAE_SE": 0.14895202501663879,
+      "RMSE": 1.110996384723584,
+      "R2": 0.85220758728371093,
+      "within_one_se": true,
+      "selected": false
+    },
+    {
+      "model": "svr",
+      "label": "Radial SVR",
+      "family": "Machine learning",
+      "MAE": 1.0664960984610024,
+      "MAE_SE": 0.26140051487378402,
+      "RMSE": 1.4147463488670862,
+      "R2": 0.76034637018965268,
+      "within_one_se": false,
+      "selected": false
+    },
+    {
+      "model": "rf",
+      "label": "Random forest",
+      "family": "Machine learning",
+      "MAE": 1.0994641269841334,
+      "MAE_SE": 0.18487458103428192,
+      "RMSE": 1.3812510281532751,
+      "R2": 0.77156003957998653,
+      "within_one_se": false,
+      "selected": false
+    },
+    {
+      "model": "gbm",
+      "label": "Gradient boosting",
+      "family": "Machine learning",
+      "MAE": 0.88533554233205414,
+      "MAE_SE": 0.13118899043039711,
+      "RMSE": 1.0346414361499643,
+      "R2": 0.87182403894650251,
+      "within_one_se": true,
+      "selected": false
+    }
+  ],
+  "tested": [
+    {
+      "T_mix0": 20,
+      "t_blast": 1.5,
+      "observed_mean": -3.3999999999999999,
+      "observed_sd": 0.5656854249492379,
+      "n": 2,
+      "prediction": -3.9012500000000059
+    },
+    {
+      "T_mix0": 20,
+      "t_blast": 2,
+      "observed_mean": -5.0999999999999996,
+      "observed_sd": 0.5656854249492379,
+      "n": 2,
+      "prediction": -4.8837500000000036
+    },
+    {
+      "T_mix0": 20,
+      "t_blast": 2.5,
+      "observed_mean": -7.4000000000000004,
+      "observed_sd": 2.2627416997969525,
+      "n": 2,
+      "prediction": -7.266250000000003
+    },
+    {
+      "T_mix0": 20,
+      "t_blast": 3,
+      "observed_mean": -11.199999999999999,
+      "observed_sd": 0.42426406871192823,
+      "n": 2,
+      "prediction": -11.048750000000004
+    },
+    {
+      "T_mix0": 22.5,
+      "t_blast": 1.5,
+      "observed_mean": -3.0499999999999998,
+      "observed_sd": 0.070710678118654821,
+      "n": 2,
+      "prediction": -2.4075000000000033
+    },
+    {
+      "T_mix0": 22.5,
+      "t_blast": 2,
+      "observed_mean": -3.6000000000000001,
+      "observed_sd": 0.5656854249492379,
+      "n": 2,
+      "prediction": -3.3775000000000031
+    },
+    {
+      "T_mix0": 22.5,
+      "t_blast": 2.5,
+      "observed_mean": -5.25,
+      "observed_sd": 0.35355339059327379,
+      "n": 2,
+      "prediction": -5.7475000000000032
+    },
+    {
+      "T_mix0": 22.5,
+      "t_blast": 3,
+      "observed_mean": -9.1500000000000004,
+      "observed_sd": 0.49497474683058273,
+      "n": 2,
+      "prediction": -9.5175000000000036
+    },
+    {
+      "T_mix0": 25,
+      "t_blast": 1.5,
+      "observed_mean": -3.25,
+      "observed_sd": 0.070710678118654502,
+      "n": 2,
+      "prediction": -3.4262500000000018
+    },
+    {
+      "T_mix0": 25,
+      "t_blast": 2,
+      "observed_mean": -4.0499999999999998,
+      "observed_sd": 0.070710678118654502,
+      "n": 2,
+      "prediction": -4.3837500000000018
+    },
+    {
+      "T_mix0": 25,
+      "t_blast": 2.5,
+      "observed_mean": -7,
+      "observed_sd": 0.141421356237309,
+      "n": 2,
+      "prediction": -6.7412500000000026
+    },
+    {
+      "T_mix0": 25,
+      "t_blast": 3,
+      "observed_mean": -10.75,
+      "observed_sd": 1.0606601717798212,
+      "n": 2,
+      "prediction": -10.498750000000005
+    }
+  ],
+  "selected_coefficients": {
+    "(Intercept)": -4.3875000000000028,
+    "u": 0.10250000000000037,
+    "v": -4.7400000000000002,
+    "I(u^2)": -0.20100000000000007,
+    "I(v^2)": -2.8000000000000012,
+    "u:v": 0.0099999999999992196
+  },
+  "final_hyperparameters": {
+    "ridge2": {
+      "lambda": 0.001
+    },
+    "svr": {
+      "cost": 100,
+      "gamma": 0.050000000000000003,
+      "epsilon": 0.10000000000000001
+    },
+    "rf": {
+      "mtry": 2,
+      "nodesize": 4
+    },
+    "gbm": {
+      "n.trees": 100,
+      "interaction.depth": 1,
+      "shrinkage": 0.10000000000000001
+    }
+  },
+  "observed_range": [-11.5, -3],
+  "prediction_range": [-11.048750000000004, -2.396540000000003],
+  "bootstrap_reps": 1000,
+  "bootstrap_interpretation": "95% interval for fitted mean response, conditional on selected model; not an individual-run prediction interval."
+}
