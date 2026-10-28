@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { TemperaturePrediction } from '@/components/temperature-prediction';
+import { predictIceCreamTemperature, TEMPERATURE_METRICS } from '@/lib/temperature-model';
 import {
-  ArrowUpRight,
   FlaskConical,
   Info,
   RotateCcw,
@@ -230,6 +230,7 @@ export default function Home() {
     [temperature, blastTime],
   );
   const differenceFromOptimum = prediction - OPTIMUM.prediction;
+  const productTemperature = predictIceCreamTemperature(temperature, blastTime);
 
   const nearestGridSetting = useMemo(() => {
     if (!gridRows.length) return null;
@@ -441,99 +442,66 @@ export default function Home() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="justify-between gap-3 bg-muted/35">
+            <CardFooter className="flex-wrap justify-between gap-3 bg-muted/35">
               <p className="text-xs text-muted-foreground">
                 Observed domain only
               </p>
               <Button variant="outline" size="sm" onClick={resetToOptimum}>
                 <RotateCcw data-icon="inline-start" />
-                Highest fitted setting
+                Highest predicted overrun
               </Button>
             </CardFooter>
           </Card>
 
-          <Card className="result-card border-0 text-white shadow-[0_24px_70px_rgb(14_52_75/22%)] ring-0">
+          <Card className="result-card min-w-0 border-0 text-white shadow-[0_24px_70px_rgb(14_52_75/22%)] ring-0">
             <CardHeader className="pb-0">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/65">
-                    Predicted overrun
-                  </p>
-                  <CardTitle className="mt-2 text-white">
-                    Current model estimate
-                  </CardTitle>
-                </div>
-                <Badge className="bg-white/12 text-white ring-1 ring-white/15">
-                  {MODEL_METRICS.name}
-                </Badge>
-              </div>
+              <CardTitle className="text-white">Two predictions, one setting</CardTitle>
+              <p className="text-sm text-white/70">
+                Initial mix {temperature.toFixed(2)}°C · Blast time {blastTime.toFixed(2)} s
+              </p>
             </CardHeader>
-            <CardContent className="flex flex-1 flex-col justify-between pt-6">
-              <div>
-                <output
-                  aria-live="polite"
-                  aria-label={`Predicted overrun ${prediction.toFixed(2)} percent`}
-                  className="block font-mono text-6xl font-semibold tracking-[-0.06em] tabular-nums md:text-7xl"
-                >
-                  {formatPercent(prediction)}
-                </output>
-                <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-white/70">
-                  {nearestGridSetting ? (
-                    <span className="rounded-full bg-white/10 px-3 py-1.5 font-mono text-xs tabular-nums ring-1 ring-white/10">
-                      Fitted response 95% interval {formatPercent(nearestGridSetting.lower)}–
-                      {formatPercent(nearestGridSetting.upper)}
-                    </span>
-                  ) : (
-                    <span className="rounded-full bg-white/10 px-3 py-1.5 text-xs ring-1 ring-white/10">
-                      Loading uncertainty interval
-                    </span>
-                  )}
+            <CardContent className="flex flex-1 flex-col justify-center gap-8 py-8">
+              <div className="grid grid-cols-2 divide-x divide-white/20" role="group" aria-label="Predictions at the current setting" aria-live="polite" aria-atomic="true">
+                <div className="min-w-0 pr-3 sm:pr-5">
+                  <p className="min-h-16 text-sm font-medium text-white/80">Predicted overrun</p>
+                  <output aria-label="Predicted overrun" className="block whitespace-nowrap font-mono text-[clamp(1.25rem,4.5vw,2.75rem)] font-semibold tracking-[-0.06em] tabular-nums">
+                    {prediction.toFixed(2)}<span className="ml-1 text-[0.6em]">%</span>
+                  </output>
+                  <p className="mt-3 text-xs text-white/65">Gas incorporation</p>
+                  <p className="mt-2 text-xs text-white/80">{MODEL_METRICS.name} · ML</p>
                 </div>
-                <p className="mt-4 max-w-md text-sm leading-6 text-white/70">
-                  Estimate for T_mix0 {temperature.toFixed(2)}°C and t_blast{' '}
-                  {blastTime.toFixed(2)} s, computed from the current fitted ridge
-                  model. The bootstrap interval describes the fitted response
-                  at the nearest grid setting, not a future individual run.
-                </p>
-              </div>
-
-              <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-xl border border-white/12 bg-white/7 p-4">
-                  <p className="text-xs text-white/60">Exploratory optimum</p>
-                  <p className="mt-1 font-mono text-lg font-semibold tabular-nums">
-                    {formatPercent(OPTIMUM.prediction)}
-                  </p>
-                  <p className="mt-1 text-xs text-white/60">
-                    T_mix0 25.0 · t_blast 3.0
-                  </p>
-                </div>
-                <div className="rounded-xl border border-white/12 bg-white/7 p-4">
-                  <p className="text-xs text-white/60">Difference from optimum</p>
-                  <p className="mt-1 flex items-center gap-1 font-mono text-lg font-semibold tabular-nums">
-                    {differenceFromOptimum > -0.005 ? (
-                      'At optimum'
-                    ) : (
-                      <>
-                        {differenceFromOptimum.toFixed(2)} pp
-                        <ArrowUpRight className="size-4" aria-hidden="true" />
-                      </>
-                    )}
-                  </p>
-                  <p className="mt-1 text-xs text-white/60">
-                    Within the tested range
-                  </p>
+                <div className="min-w-0 pl-3 sm:pl-5">
+                  <p className="min-h-16 text-sm font-medium text-white/80">Predicted product temperature</p>
+                  <output aria-label="Predicted product temperature" className="block whitespace-nowrap font-mono text-[clamp(1.25rem,4.5vw,2.75rem)] font-semibold tracking-[-0.06em] tabular-nums">
+                    {productTemperature.toFixed(2).replace('-', '−')}<span className="ml-1 text-[0.6em]">°C</span>
+                  </output>
+                  <p className="mt-3 text-xs text-white/65">Cooling effect</p>
+                  <p className="mt-2 text-xs text-white/80">{TEMPERATURE_METRICS.name} · Traditional</p>
                 </div>
               </div>
+              <p className="text-sm leading-6 text-white/70">Adjust either input to compare gas incorporation and cooling together.</p>
             </CardContent>
             <CardFooter className="border-white/10 bg-black/10 text-xs text-white/65">
-              In-range model estimate · not a universal process optimum
+              Highest predicted overrun selects the overrun maximum only; it does not optimize product temperature.
             </CardFooter>
           </Card>
         </div>
 
-        <TemperaturePrediction temperature={temperature} blastTime={blastTime} />
-
-        <h2 className="mt-8 font-heading text-xl font-semibold">Overrun model performance</h2>
+        <details open className="mt-8 rounded-2xl border border-border bg-card/50 p-5 md:p-7">
+        <summary className="cursor-pointer font-heading text-xl font-semibold">Overrun analysis</summary>
+        <p className="mt-2 text-sm text-muted-foreground">Response curve, validation metrics and tested conditions · quadratic ridge ML</p>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-xl border border-border bg-card p-4">
+            <p className="text-xs text-muted-foreground">Overrun fitted response 95% interval</p>
+            <p className="mt-2 font-mono font-semibold">{nearestGridSetting ? `${formatPercent(nearestGridSetting.lower)}–${formatPercent(nearestGridSetting.upper)}` : 'Loading interval…'}</p>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">Bootstrap interval at the nearest grid setting; describes the fitted response, not a future individual run.</p>
+          </div>
+          <div className="rounded-xl border border-border bg-card p-4">
+            <p className="text-xs text-muted-foreground">Highest predicted overrun in range</p>
+            <p className="mt-2 font-mono font-semibold">{formatPercent(OPTIMUM.prediction)} · 25.0°C · 3.0 s</p>
+            <p className="mt-2 text-xs text-muted-foreground">{differenceFromOptimum > -0.005 ? 'At the highest predicted overrun setting' : `${Math.abs(differenceFromOptimum).toFixed(2)} percentage points below the highest predicted overrun`}</p>
+          </div>
+        </div>
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
           {[
             ['Grouped MAE', `${MODEL_METRICS.mae.toFixed(2)} pp`],
@@ -703,8 +671,12 @@ export default function Home() {
           </CardContent>
         </Card>
 
+        </details>
+
+        <TemperaturePrediction temperature={temperature} blastTime={blastTime} />
+
         <footer className="mt-8 flex flex-col gap-2 border-t border-border/80 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>Quadratic ridge ML · grouped leave-one-condition-out validation</p>
+          <p>Quadratic ridge + quadratic OLS · grouped condition-held-out validation</p>
           <p>Model range T_mix0 20–25°C · t_blast 1.5–3.0 s</p>
         </footer>
       </section>

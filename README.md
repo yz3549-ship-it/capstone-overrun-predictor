@@ -11,12 +11,12 @@ Install [Node.js](https://nodejs.org/) version 22.13 or newer. Then open a termi
 ```bash
 git clone https://github.com/yz3549-ship-it/capstone-overrun-predictor.git
 cd capstone-overrun-predictor
-git checkout v1.1.0
+git checkout v1.1.1
 npm ci
 npm run dev
 ```
 
-Open the local address printed in the terminal, normally `http://127.0.0.1:5173`. Move either slider or enter a numeric value to update both predictions. The ice cream temperature section shows the product-temperature response curve, validation metrics and observed mean with SD at tested settings. Expand its comparison table to inspect traditional and machine learning models. The Highest fitted setting button maximizes overrun within the studied domain; it does not optimize temperature or overall product quality. Use **Ctrl+C** to stop the server. Internet access is needed for initial dependency installation; the running predictor uses local files.
+Open the local address printed in the terminal, normally `http://127.0.0.1:5173`. Move either slider or enter a numeric value to update **Predicted overrun** and **Predicted product temperature** together in the side-by-side results card. Expand or collapse **Overrun analysis** and **Product temperature analysis** independently to inspect response curves, validation metrics and observed results. Expand the temperature comparison table to inspect traditional and machine learning models. The **Highest predicted overrun** button selects the setting with the highest predicted overrun within the studied domain and displays its corresponding product temperature; it does not optimize temperature or overall product quality. Use **Ctrl+C** to stop the server. Internet access is needed for initial dependency installation; the running predictor uses local files.
 
 Alternatively, download the repository ZIP from GitHub, extract it, open a terminal in the extracted folder, and run `npm ci` followed by `npm run dev`.
 
@@ -41,7 +41,7 @@ The model was fitted to 24 observations at 12 experimental combinations with two
 
 Product-temperature prediction achieved grouped MAE 0.814°C, RMSE 0.983°C and predictive R-squared 0.884. The best machine learning alternative was gradient boosting (MAE 0.885°C). At 25°C and 3.0 s the temperature prediction is -10.49875°C.
 
-The source data version is identified by workbook MD5 `13222519c0889dbfbb11fe8a83a22efb`. The overrun model is unchanged from October 4, 2026; the temperature analysis was added on October 27, 2026. This reproduction package is version 1.1.0.
+The source data version is identified by workbook MD5 `13222519c0889dbfbb11fe8a83a22efb`. The overrun model is unchanged from October 4, 2026; the temperature analysis was added on October 27, 2026. This reproduction package is version 1.1.1 (interface updated October 28, 2026).
 
 ## What is reproduced
 
